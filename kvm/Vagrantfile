@@ -1,3 +1,8 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'libvirt'
+
 Vagrant.configure("2") do |config|
   config.vm.provision "file", source: "vagrant", destination: "/home/vagrant/.ssh/id_rsa"
   config.vm.provision "file", source: "fdisk.sh", destination: "/home/vagrant/fdisk.sh"
@@ -18,52 +23,49 @@ Vagrant.configure("2") do |config|
     ", privileged: true
 
   config.vm.define "master" do |master|
-    master.vm.box = "centos/8"
-    master.vm.box_version = "1905.1"
     master.vm.hostname = "master"
+    master.vm.box = "centos/8"
+    master.vm.box_check_update = false
     master.vm.network "public_network",
-      :type => "dhcp",
-      :libvirt__nextwork_address => '192.168.0.127'
-    master.vm.provider "libvirt"
+      bridge: "eth0",
+      ip: "192.168.0.127"
     master.vm.provider :libvirt do |v|
-      v.memory = 3096
-      v.cpus = 2
+      v.memory = 10240
+      v.cpus = 12
       v.storage :file, :size => '30G'
       v.cpu_mode = 'host-passthrough'
     end
   end
 
   config.vm.define "slave1" do |slave1|
-    slave1.vm.box = "centos/8"
-    slave1.vm.box_version = "1905.1"
     slave1.vm.hostname = "slave1"
+    slave1.vm.box = "centos/8"
+    slave1.vm.box_check_update = false
     slave1.vm.network "public_network",
-      :type => "dhcp",
-      :libvirt__nextwork_address => '192.168.0.128'
-    slave1.vm.provider "libvirt"
+      bridge: "eth0",
+      ip: "192.168.0.128"
     slave1.vm.provider :libvirt do |v|
-      v.memory = 8192
-      v.cpus = 3
-      v.storage :file, :size => '30G'
-      v.cpu_mode = 'host-passthrough'
-    end
- end
-
-
-  config.vm.define "slave2" do |slave2|
-    slave2.vm.box = "centos/8"
-    slave2.vm.box_version = "1905.1"
-    slave2.vm.hostname = "slave2"
-    slave2.vm.network "public_network",
-      :type => "dhcp",
-      :libvirt__nextwork_address => '192.168.0.129'
-    slave2.vm.provider "libvirt"
-    slave2.vm.provider :libvirt do |v|
-      v.memory = 8192
-      v.cpus = 3
+      v.memory = 1024
+      v.cpus = 12
       v.storage :file, :size => '30G'
       v.cpu_mode = 'host-passthrough'
     end
   end
+
+  config.vm.define "slave2" do |slave2|
+    slave2.vm.hostname = "slave2"
+    slave2.vm.box = "centos/8"
+    slave2.vm.box_check_update = false
+    slave2.vm.network "public_network",
+      bridge: "eth0",
+      ip: "192.168.0.129"
+    slave2.vm.provider :libvirt do |v|
+      v.memory = 1024
+      v.cpus = 12
+      v.storage :file, :size => '30G'
+      v.cpu_mode = 'host-passthrough'
+    end
+  end
+
 
 end
