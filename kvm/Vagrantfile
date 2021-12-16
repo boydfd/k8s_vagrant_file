@@ -58,7 +58,7 @@ Vagrant.configure("2") do |config|
     slave2.vm.box_check_update = false
     slave2.vm.network "public_network",
       bridge: "eth0",
-      ip: "192.168.0.129"
+      ip: "192.168.0.159"
     slave2.vm.provider :libvirt do |v|
       v.memory = 20480
       v.cpus = 12
@@ -75,6 +75,96 @@ Vagrant.configure("2") do |config|
       bridge: "eth0",
       ip: "192.168.0.130"
     slave3.vm.provider :libvirt do |v|
+      v.memory = 2048
+      v.cpus = 12
+      v.storage :file, :size => '40G'
+      v.cpu_mode = 'host-passthrough'
+    end
+  end
+
+  config.vm.define "slave4" do |slave4|
+    slave4.vm.hostname = "slave4"
+    slave4.vm.box = "centos/7"
+    slave4.vm.box_check_update = false
+    slave4.vm.network "public_network",
+      bridge: "eth0",
+      ip: "192.168.0.151"
+    slave4.vm.provider :libvirt do |v|
+      v.memory = 2048
+      v.cpus = 12
+      v.storage :file, :size => '40G'
+      v.cpu_mode = 'host-passthrough'
+    end
+  end
+
+  config.vm.define "slave5" do |slave5|
+    slave5.vm.hostname = "slave4"
+    slave5.vm.box = "centos/7"
+    slave5.vm.box_check_update = false
+    slave5.vm.network "public_network",
+      bridge: "eth0",
+      ip: "192.168.0.152"
+    slave5.vm.provider :libvirt do |v|
+      v.memory = 8192
+      v.cpus = 12
+      v.storage :file, :size => '40G'
+      v.cpu_mode = 'host-passthrough'
+    end
+  end
+
+  config.vm.define "hdp_master" do |hdp_master|
+    hdp_master.vm.hostname = "slave4"
+    hdp_master.vm.box = "centos/7"
+    hdp_master.vm.box_check_update = false
+    hdp_master.vm.network "public_network",
+      bridge: "eth0",
+      ip: "192.168.0.161"
+    hdp_master.vm.provider :libvirt do |v|
+      v.memory = 20480
+      v.cpus = 12
+      v.storage :file, :size => '40G'
+      v.cpu_mode = 'host-passthrough'
+    end
+  end
+
+  config.vm.define "hdp_slave1" do |hdp_slave1|
+    hdp_slave1.vm.hostname = "slave4"
+    hdp_slave1.vm.box = "centos/7"
+    hdp_slave1.vm.box_check_update = false
+    hdp_slave1.vm.network "public_network",
+      bridge: "eth0",
+      ip: "192.168.0.162"
+    hdp_slave1.vm.provider :libvirt do |v|
+      v.memory = 20480
+      v.cpus = 12
+      v.storage :file, :size => '40G'
+      v.cpu_mode = 'host-passthrough'
+    end
+  end
+
+  config.vm.define "hdp_slave2" do |hdp_slave2|
+    hdp_slave2.vm.hostname = "slave4"
+    hdp_slave2.vm.box = "centos/7"
+    hdp_slave2.vm.box_check_update = false
+    hdp_slave2.vm.network "public_network",
+      bridge: "eth0",
+      ip: "192.168.0.163"
+    hdp_slave2.vm.provider :libvirt do |v|
+      v.memory = 20480
+      v.cpus = 12
+      v.storage :file, :size => '40G'
+      v.cpu_mode = 'host-passthrough'
+    end
+  end
+
+  config.vm.define "hdp_slave3" do |hdp_slave3|
+    hdp_slave3.vm.hostname = "slave4"
+    hdp_slave3.vm.box = "centos/7"
+    hdp_slave3.vm.box_check_update = false
+    hdp_slave3.vm.network "public_network",
+      bridge: "eth0",
+      ip: "192.168.0.164"
+    hdp_slave3.vm.provider :libvirt do |v|
       v.memory = 20480
       v.cpus = 12
       v.storage :file, :size => '40G'
