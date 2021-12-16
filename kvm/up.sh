@@ -16,6 +16,7 @@ vagrant ssh slave3 -- -t 'sudo mount /dev/vdb1 /var/lib;sudo systemctl restart m
 vagrant ssh hdp_master -- -t 'sudo mount /dev/vdb1 /var/lib;sudo ambari-server start;sudo ambari-agent start'
 vagrant ssh hdp_slave1 -- -t 'sudo mount /dev/vdb1 /var/lib;sudo ambari-agent start'
 vagrant ssh hdp_slave2 -- -t 'sudo mount /dev/vdb1 /var/lib;sudo ambari-agent start'
+vagrant ssh hdp_slave3 -- -t 'sudo mount /dev/vdb1 /var/lib;sudo ambari-agent start'
 
 # hdp end
 
